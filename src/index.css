@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes gdpr-spin { to { transform: rotate(360deg) } }
+
+/* ─── Variables ────────────────────────────────────── */
+:root {
+  --navy:        #1E3A5F;
+  --blue:        #2E5C9A;
+  --orange:      #E8760A;
+  --accent:      #E8760A;
+  --green:       #1A6B3C;
+
+  /* Dark palette iOS */
+  --bg:          #000000;
+  --surface:     #1c1c1e;
+  --surface-1:   #1c1c1e;
+  --surface-2:   #2c2c2e;
+  --border:      #38383a;
+  --border-dark: #48484a;
+  --text-1:      #ffffff;
+  --text-2:      rgba(255,255,255,0.8);
+  --text-3:      rgba(255,255,255,0.4);
+
+  /* Status iOS dark */
+  --danger:      #ff453a;
+  --success:     #32d74b;
+  --warning:     #ffd60a;
+
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --nav-h:       60px;
+}
+
+/* ─── Base ─────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-1);
+    background: var(--bg);
+    padding-top: var(--safe-top);
+  }
+  * { box-sizing: border-box; }
+
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+  }
+
+  /* Scrollbars — ultra fins dark */
+  ::-webkit-scrollbar { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+}
+
+/* ─── Components ───────────────────────────────────── */
+@layer components {
+
+  /* ── Card — fond surface-1, 0 border, radius 12 ── */
+  .card {
+    background: var(--surface-1);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    transition: background 0.15s ease;
+  }
+  .card:hover {
+    background: var(--surface-2);
+  }
+
+  /* ── Bouton primaire — orange Matias ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 16px;
+    background: var(--accent);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease;
+    user-select: none;
+  }
+  .btn-primary:not(:disabled):hover {
+    background: #d06809;
+  }
+  .btn-primary:not(:disabled):active {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* ── Bouton secondaire — surface-2 ── */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 16px;
+    background: var(--surface-2);
+    color: var(--text-1);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    user-select: none;
+  }
+  .btn-secondary:not(:disabled):hover {
+    background: var(--border-dark);
+  }
+  .btn-secondary:not(:disabled):active {
+    transform: scale(0.98);
+  }
+  .btn-secondary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* ── Bouton icône ── */
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.1s ease;
+    color: var(--text-2);
+  }
+  .btn-icon:hover { background: var(--surface-2); color: var(--text-1); }
+
+  /* ── Input / Select — fond surface-2, texte blanc ── */
+  .input {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-1);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    outline: none;
+  }
+  .input::placeholder { color: var(--text-3); }
+  .input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(232, 118, 10, 0.20);
+  }
+  textarea.input { padding: 10px 12px; min-height: 80px; resize: vertical; }
+
+  /* Select arrow — blanc sur fond sombre */
+  select.input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='rgba(255,255,255,0.4)' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  /* ── Badges — iOS dark style ── */
+  .badge-ok {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(50, 215, 75, 0.15);
+    color: var(--success);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+  .badge-ko {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 69, 58, 0.15);
+    color: var(--danger);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+  .badge-warn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 214, 10, 0.15);
+    color: var(--warning);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-1);
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+  }
+
+  /* ── Page container ── */
+  .page {
+    padding: 24px 20px;
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: calc(var(--nav-h) + var(--safe-bottom) + 24px);
+  }
+}
+
+/* ─── Bottom nav safe area ─────────────────────────── */
+.bottom-nav {
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ─── Chat bubbles ─────────────────────────────────── */
+.bubble-sent {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 16px;
+  border-bottom-right-radius: 4px;
+  padding: 10px 14px;
+  max-width: 280px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.bubble-received {
+  background: var(--surface-2);
+  color: var(--text-1);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  padding: 10px 14px;
+  max-width: 280px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ─── Animations ───────────────────────────────────── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-slide-up { animation: slideUp 0.2s ease both; }
+.animate-fade-in  { animation: fadeIn 0.15s ease both; }
+
+/* ─── Loading spinner ──────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border-dark);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
