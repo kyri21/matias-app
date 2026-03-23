@@ -1,0 +1,7 @@
+Si tu changes d'ordi, pour relancer Matias :
+
+  git clone https://github.com/kyri21/matias-app.git
+  cd matias-app
+  npm install
+  # Copier depuis kDrive : .env.local, functions/.env, cuisine-yorgios-*.json
+  npm run dev
